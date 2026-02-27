@@ -9,6 +9,10 @@ on:
     paths:
       - api/**
 
+defaults:
+  run:
+    working-directory: ./api
+
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
@@ -25,11 +29,9 @@ jobs:
           bundler-cache: true
 
       - name: Scan for common Rails security vulnerabilities using static analysis
-        working-directory: ./api
         run: bin/brakeman --no-pager
 
       - name: Scan for known security vulnerabilities in gems used
-        working-directory: ./api
         run: bin/bundler-audit
 
   scan_js:
@@ -47,7 +49,6 @@ jobs:
           bundler-cache: true
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
-        working-directory: ./api
         run: bin/importmap audit
 
   lint:
@@ -76,7 +77,6 @@ jobs:
             rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-
 
       - name: Lint code for consistent style
-        working-directory: ./api
         run: bin/rubocop -f github
 
   test:
@@ -100,7 +100,6 @@ jobs:
           bundler-cache: true
 
       - name: Run tests
-        working-directory: ./api
         env:
           RAILS_ENV: test
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
@@ -132,7 +131,7 @@ jobs:
           RAILS_ENV: test
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test:system
+        run: bin/rails test:system
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v7
