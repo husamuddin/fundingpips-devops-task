@@ -3,11 +3,11 @@ name: CI
 on:
   pull_request:
     paths:
-      - ./api
+      - api/**
   push:
     branches: [main]
     paths:
-      - ./api
+      - api/**
 
 jobs:
   scan_ruby:
@@ -18,8 +18,9 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up Ruby
-        working-directory: ./api
         uses: ruby/setup-ruby@v1
+        env:
+          BUNDLE_GEMFILE: api/Gemfile
         with:
           bundler-cache: true
 
@@ -39,8 +40,9 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up Ruby
-        working-directory: ./api
         uses: ruby/setup-ruby@v1
+        env:
+          BUNDLE_GEMFILE: api/Gemfile
         with:
           bundler-cache: true
 
@@ -57,18 +59,18 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up Ruby
-        working-directory: ./api
         uses: ruby/setup-ruby@v1
+        env:
+          BUNDLE_GEMFILE: api/Gemfile
         with:
           bundler-cache: true
 
       - name: Prepare RuboCop cache
-        working-directory: ./api
         uses: actions/cache@v5
         env:
-          DEPENDENCIES_HASH: ${{ hashFiles('.ruby-version', '**/.rubocop.yml', '**/.rubocop_todo.yml', 'Gemfile.lock') }}
+          DEPENDENCIES_HASH: ${{ hashFiles('api/.ruby-version', 'api/**/.rubocop.yml', 'api/**/.rubocop_todo.yml', 'api/Gemfile.lock') }}
         with:
-          path: ${{ env.RUBOCOP_CACHE_ROOT }}
+          path: api/${{ env.RUBOCOP_CACHE_ROOT }}
           key: rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-${{ github.ref_name == github.event.repository.default_branch && github.run_id || 'default' }}
           restore-keys: |
             rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-
@@ -91,8 +93,9 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up Ruby
-        working-directory: ./api
         uses: ruby/setup-ruby@v1
+        env:
+          BUNDLE_GEMFILE: api/Gemfile
         with:
           bundler-cache: true
 
@@ -118,13 +121,13 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up Ruby
-        working-directory: ./api
         uses: ruby/setup-ruby@v1
+        env:
+          BUNDLE_GEMFILE: api/Gemfile
         with:
           bundler-cache: true
 
       - name: Run System Tests
-        working-directory: ./api
         env:
           RAILS_ENV: test
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
@@ -132,10 +135,9 @@ jobs:
         run: bin/rails db:test:prepare test:system
 
       - name: Keep screenshots from failed system tests
-        working-directory: ./api
         uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
+          path: ${{ github.workspace }}/api/tmp/screenshots
           if-no-files-found: ignore
