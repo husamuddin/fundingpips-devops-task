@@ -1,0 +1,22 @@
+[tools]
+aws = { version = "2.27.63", symlink_bins = "true" }
+ruby = "3.4.8"
+terraform = "1.14.6"
+terragrunt = "0.95.0"
+
+
+[tasks.terragrunt_cleanup]
+description = "clean up /terraform"
+run = '''
+find ./terraform/catalog/modules -type d -name .terraform -prune -exec rm -rvf {} +
+find ./terraform/catalog/modules -type f -name ..lock.hcl -exec rm -vf {} +
+
+find ./terraform/catalog/units -type d -name .terragrunt-cache -prune -exec rm -rvf {} +
+find ./terraform/catalog/units -type f -name .terragrunt.lock.hcl -exec rm -vf {} +
+
+find ./terraform/live -type d -name .terragrunt-cache -prune -exec rm -rvf {} +
+find ./terraform/live -type d -name .infracost -prune -exec rm -rvf {} +
+
+find ./terraform/live -type d \( -name .terragrunt-stack -o -name .terragrunt-cache \) -prune -exec rm -rvf {} +
+find ./terraform/live -type d \( -name .terragrunt-stack -o -name .terragrunt-cache \) -prune -exec rm -rvf {} +
+'''

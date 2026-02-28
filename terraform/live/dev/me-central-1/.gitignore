@@ -1,0 +1,5 @@
+*
+!.gitignore
+!env.hcl
+!region.hcl
+!terragrunt.stack.hcl
