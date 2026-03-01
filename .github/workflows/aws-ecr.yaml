@@ -20,28 +20,28 @@ env:
   AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN }}
 
 jobs:
-  # analyze:
-  #   name: CodeQL Analysis
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     security-events: write
-  #     actions: read
-  #     contents: read
-  #
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #
-  #     - name: Initialize CodeQL
-  #       uses: github/codeql-action/init@v3
-  #       with:
-  #         languages: ruby
-  #         source-root: ./api
-  #
-  #     - name: Perform CodeQL Analysis
-  #       uses: github/codeql-action/analyze@v3
-  #       with:
-  #         category: "/language:ruby"
+  analyze:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ruby
+          source-root: ./api
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:ruby"
 
   build:
     name: Build Docker image
