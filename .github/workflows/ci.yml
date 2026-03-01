@@ -147,6 +147,8 @@ jobs:
           path: ${{ github.workspace }}/api/tmp/screenshots
           if-no-files-found: ignore
 
+  # ENABLE WITH GITHUB ENTERPRISE
+  #
   # analyze:
   #   name: CodeQL Analysis
   #   runs-on: ubuntu-latest
@@ -169,3 +171,4 @@ jobs:
   #       uses: github/codeql-action/analyze@v4
   #       with:
   #         category: "/language:ruby"
+
