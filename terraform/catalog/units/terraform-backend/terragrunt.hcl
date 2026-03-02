@@ -3,7 +3,7 @@ include "root" {
 }
 
 terraform {
-  source = "${find_in_parent_folders("catalog/modules")}//terraform-state"
+  source = "${find_in_parent_folders("catalog/modules")}//terraform-backend"
 }
 
 inputs = {
