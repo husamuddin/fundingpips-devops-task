@@ -23,6 +23,8 @@ inputs = {
   subnet_ids = dependency.vpc.outputs.private_subnets
 
   eks_managed_node_groups = values.eks_managed_node_groups
+  compute_config = values.compute_config
+  deletion_protection = values.deletion_protection
 
   tags = values.tags
 }

@@ -9,15 +9,12 @@ module "eks" {
   endpoint_private_access                  = var.endpoint_private_access
   enable_cluster_creator_admin_permissions = var.enable_cluster_creator_admin_permissions
   enable_irsa                              = var.enable_irsa
-
-  compute_config = {
-    enabled    = true
-    node_pools = ["general-purpose"]
-  }
+  deletion_protection                      = var.deletion_protection
 
   vpc_id     = var.vpc_id
   subnet_ids = var.subnet_ids
 
+  compute_config = var.compute_config
   eks_managed_node_groups = var.eks_managed_node_groups
 
   tags = var.tags

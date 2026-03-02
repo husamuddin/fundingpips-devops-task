@@ -39,5 +39,22 @@ variable "tags" {
 }
 
 variable "eks_managed_node_groups" {
-  type = map(any)
+  type     = map(any)
+  nullable = true
+  default  = null
+}
+
+variable "compute_config" {
+  type = object({
+    enabled = optional(bool, false)
+    node_pools = optional(list(string))
+    node_role_arn = optional(string) }
+  )
+  nullable = true
+  default  = null
+}
+
+variable "deletion_protection" {
+  type = bool
+  default = false
 }

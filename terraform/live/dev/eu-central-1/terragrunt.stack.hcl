@@ -91,15 +91,14 @@ unit "main-eks" {
     enable_cluster_creator_admin_permissions = true
     enable_irsa                              = true
 
-    eks_managed_node_groups = {
-      main = {
-        instance_types = ["t4g.small"]
+    deletion_protection                      = true
 
-        min_size     = 1
-        max_size     = 2
-        desired_size = 2
-      }
+    compute_config = {
+      enabled    = true
+      node_pools = ["general-purpose"]
     }
+
+    eks_managed_node_groups = null
 
     tags               = try(local.env.tags, {})
   }
