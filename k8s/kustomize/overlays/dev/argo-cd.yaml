@@ -2,13 +2,17 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: kustomize-api
-  namespace: argocd
 spec:
   project: default
   source:
     path: k8s/kustomize/overlays/dev
     repoURL: https://github.com/husamuddin/fundingpips-devops-task
-    targetRevision: HEAD
+    targetRevision: argo-cd
   destination:
     server: https://kubernetes.default.svc
     namespace: api
+  syncPolicy:
+    automated:
+      enabled: true
+      prune: true
+      selfHeal: true
