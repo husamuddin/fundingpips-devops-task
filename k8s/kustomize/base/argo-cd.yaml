@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helm-api
+  namespace: argocd
+spec:
+  project: default
+  source:
+    path: k8s/chart
+    repoURL: https://github.com/husamuddin/fundingpips-devops-task
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: api
+---
