@@ -19,8 +19,9 @@ spec:
     namespace: api
   syncPolicy:
     automated:
-      enabled: true
+      enabled: false
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true

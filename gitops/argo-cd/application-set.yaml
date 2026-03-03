@@ -49,5 +49,10 @@ spec:
         server: "{{.server}}"
         namespace: "{{.path.basename}}"
       syncPolicy:
+        automated:
+          enabled: false
+          prune: true
+          selfHeal: true
         syncOptions:
           - CreateNamespace=true
+          - ServerSideApply=true
