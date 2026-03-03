@@ -22,6 +22,7 @@ patches:
                 annotations:
                   cert-manager.io/cluster-issuer: letsencrypt
                   external-dns.alpha.kubernetes.io/hostname: api.fundingpips.xctl.fyi
+                  nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
                 tls:
                   - hosts:
                       - api.fundingpips.xctl.fyi
