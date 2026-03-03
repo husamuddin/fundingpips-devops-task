@@ -9,15 +9,15 @@ terragrunt = "0.95.0"
 [tasks.terragrunt_cleanup]
 description = "clean up /terraform"
 run = '''
-find ./terraform/catalog/modules -type d -name .terraform -prune -exec rm -rvf {} +
-find ./terraform/catalog/modules -type f -name .terraform.lock.hcl -exec rm -vf {} +
+find ./gitops/terraform/catalog/modules -type d -name .terraform -prune -exec rm -rvf {} +
+find ./gitops/terraform/catalog/modules -type f -name .terraform.lock.hcl -exec rm -vf {} +
 
-find ./terraform -type d -name .terragrunt-cache -prune -exec rm -rvf {} +
-find ./terraform -type f -name .terragrunt.lock.hcl -exec rm -vf {} +
+find ./gitops/terraform -type d -name .terragrunt-cache -prune -exec rm -rvf {} +
+find ./gitops/terraform -type f -name .terragrunt.lock.hcl -exec rm -vf {} +
 
-find ./terraform -type d -name .terragrunt-cache -prune -exec rm -rvf {} +
-find ./terraform -type d -name .infracost -prune -exec rm -rvf {} +
+find ./gitops/terraform -type d -name .terragrunt-cache -prune -exec rm -rvf {} +
+find ./gitops/terraform -type d -name .infracost -prune -exec rm -rvf {} +
 
-find ./terraform -type d \( -name .terragrunt-stack -o -name .terragrunt-cache \) -prune -exec rm -rvf {} +
-find ./terraform -type d \( -name .terragrunt-stack -o -name .terragrunt-cache \) -prune -exec rm -rvf {} +
+find ./gitops/terraform -type d \( -name .terragrunt-stack -o -name .terragrunt-cache \) -prune -exec rm -rvf {} +
+find ./gitops/terraform -type d \( -name .terragrunt-stack -o -name .terragrunt-cache \) -prune -exec rm -rvf {} +
 '''

@@ -1,5 +1,5 @@
 locals {
-  units_path  = "${get_repo_root()}/terraform/catalog/units"
+  units_path  = "${get_repo_root()}/gitops/terraform/catalog/units"
   bucket_name = "fundingpips-devops-task-terragrunt-state"
 
   current_dir = get_terragrunt_dir()
@@ -100,6 +100,38 @@ unit "main-eks" {
 
     eks_managed_node_groups = null
 
+    tags               = try(local.env.tags, {})
+  }
+}
+
+
+unit "secrets-manager-irsa" {
+  source = "${local.units_path}/iam/irsa"
+  path   = "secrets-manager-irsa"
+
+  values = {
+    name          = "secrets-manager-irsa-role"
+
+    policy = jsonencode({
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Sid    = "SecretsReadAccess"
+          Effect = "Allow"
+
+          Action = [
+            "secretsmanager:GetSecretValue",
+            "secretsmanager:DescribeSecret"
+          ]
+
+          Resource = [
+            "arn:aws:secretsmanager:eu-central-1:239861161554:secret:argo-cd-github-app-ClJHmy*"
+          ]
+        }
+      ]
+    })
+
+    namespace_service_accounts = ["external-secrets:secret-manager"]
     tags               = try(local.env.tags, {})
   }
 }
