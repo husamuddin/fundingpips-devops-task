@@ -9,3 +9,4 @@ helmCharts:
 resources:
   - namespace.yaml
   - sa.yaml
+  - ./cluster-secret-store.yaml
