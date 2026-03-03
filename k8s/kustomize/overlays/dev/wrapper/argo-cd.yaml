@@ -2,12 +2,13 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: kustomize-api
+  namespace: argo
 spec:
   project: default
   source:
     path: k8s/kustomize/overlays/dev
     repoURL: https://github.com/husamuddin/fundingpips-devops-task
-    targetRevision: argo-cd
+    targetRevision: main
   destination:
     server: https://kubernetes.default.svc
     namespace: api
