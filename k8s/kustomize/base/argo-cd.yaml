@@ -7,33 +7,13 @@ spec:
   source:
     path: k8s/chart
     repoURL: https://github.com/husamuddin/fundingpips-devops-task
-    targetRevision: argo-cd
+    targetRevision: main
     helm:
       releaseName: api
       valuesObject:
-        ingress:
-          enabled: true
-          className: nginx
-          annotations:
-            cert-manager.io/cluster-issuer: letsencrypt
-            external-dns.alpha.kubernetes.io/hostname: api.fundingpips.xctl.fyi
-          tls:
-            - hosts:
-                - api.fundingpips.xctl.fyi
-              secretName: api-fundingpips-xctl-fyi
-
-          hosts:
-            - host: api.fundingpips.xctl.fyi
-              paths:
-                - path: /
-                  pathType: Prefix
         image:
           repository: 239861161554.dkr.ecr.eu-central-1.amazonaws.com/api
-          pullPolicy: IfNotPresent
           tag: "145b9fe"
-        env:
-          - name: SECRET_KEY_BASE
-            value: "8e6d925c2cbe98e8b83d7299d7f5181a81d2ab1335231d868f9fe928df7ae703b958ada3d044f2de8183d9b4f91b28172e62b9e5d2b905b45da4b8fe56eb1d21"
   destination:
     server: https://kubernetes.default.svc
     namespace: api
