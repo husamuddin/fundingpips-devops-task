@@ -16,14 +16,14 @@ spec:
           className: nginx
           annotations:
             cert-manager.io/cluster-issuer: letsencrypt
-            external-dns.alpha.kubernetes.io/hostname: dev.fundingpips.xctl.fyi
+            external-dns.alpha.kubernetes.io/hostname: api.fundingpips.xctl.fyi
           tls:
             - hosts:
-                - dev.fundingpips.xctl.fyi
-              secretName: dev-fundingpips-xctl-fyi
+                - api.fundingpips.xctl.fyi
+              secretName: api-fundingpips-xctl-fyi
 
           hosts:
-            - host: dev.fundingpips.xctl.fyi
+            - host: api.fundingpips.xctl.fyi
               paths:
                 - path: /
                   pathType: Prefix
