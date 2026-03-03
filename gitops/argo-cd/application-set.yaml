@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tools
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generatators:
+          - git:
+            repoURL: https://github.com/husamuddin/argo-cd.git
+            revision: HEAD
+            directories:
+              - path: argo-cd/dev/eu-central-1/main-eks-cluster/argo-cd
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: "dev"
+                  region: "eu-central-1"
+                  cluster_name: "main-eks-cluster"
+
+    - matrix:
+        generatators:
+          - git:
+            repoURL: https://github.com/husamuddin/argo-cd.git
+            revision: HEAD
+            directories:
+              - path: argo-cd/dev/eu-central-1/main-eks-cluster/*
+              - path: argo-cd/dev/eu-central-1/main-eks-cluster/argo-cd
+                exclude: true
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: "{{ index .path.segments 1 }}"
+                  region: "{{ index .path.segments 2 }}"
+                  cluster_name: "{{ index .path.segments 3 }}"
+
+  template:
+    metadata:
+      name: "{{ index .path.segments 1 }}-{{ index .path.segments 2 }}-{{.path.basenameNormalized}}"
+    spec:
+      project: "tools"
+      source:
+        repoURL: https://github.com/husamuddin/argo-cd.git
+        targetRevision: HEAD
+        path: "{{.path.path}}"
+      destination:
+        server: "{{.server}}"
+        namespace: "{{.path.basename}}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true

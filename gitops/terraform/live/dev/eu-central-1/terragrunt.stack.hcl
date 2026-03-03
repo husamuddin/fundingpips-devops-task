@@ -125,7 +125,7 @@ unit "secrets-manager-irsa" {
           ]
 
           Resource = [
-            "arn:aws:secretsmanager:eu-central-1:239861161554:secret:argo-cd-github-app-ClJHmy*"
+            "arn:aws:secretsmanager:eu-central-1:239861161554:secret:*"
           ]
         }
       ]
