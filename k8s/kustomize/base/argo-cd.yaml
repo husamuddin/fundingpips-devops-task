@@ -11,12 +11,26 @@ spec:
     helm:
       releaseName: api
       valuesObject:
+        ingress:
+          enabled: true
+          className: nginx
+          annotations:
+            cert-manager.io/issuer: letsencrypt
+            external-dns.alpha.kubernetes.io/hostname: dev.fundingpips.xctl.fyi
+          tls:
+            - hosts:
+                - dev.fundingpips.xctl.fyi
+              secretName: dev-fundingpips-xctl-fyi
+
+          hosts:
+            - host: dev.fundingpips.xctl.fyi
+              paths:
+                - path: /
+                  pathType: Prefix
         image:
           repository: 239861161554.dkr.ecr.eu-central-1.amazonaws.com/api
           pullPolicy: IfNotPresent
           tag: "145b9fe"
-        # imagePullSecrets:
-        #   - ecr-registry-secret
         env:
           - name: SECRET_KEY_BASE
             value: "8e6d925c2cbe98e8b83d7299d7f5181a81d2ab1335231d868f9fe928df7ae703b958ada3d044f2de8183d9b4f91b28172e62b9e5d2b905b45da4b8fe56eb1d21"
