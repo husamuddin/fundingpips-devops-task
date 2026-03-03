@@ -13,6 +13,11 @@ variable "policy" {
   nullable = true
 }
 
+variable "policies" {
+  type = any
+  default  = {}
+}
+
 variable "tags" {
   type = map(any)
   default  = {}

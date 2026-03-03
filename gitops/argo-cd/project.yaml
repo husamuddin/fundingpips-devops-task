@@ -10,7 +10,7 @@ spec:
     warn: true
 
   sourceRepos:
-    - "https://github.com/xxx/gitops.git"
+    - https://github.com/husamuddin/fundingpips-devops-task.git
 
   destinations:
     - namespace: "*"

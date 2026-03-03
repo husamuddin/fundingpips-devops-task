@@ -6,6 +6,10 @@ helmCharts:
     releaseName: argo-cd
     repo: https://argoproj.github.io/argo-helm
     version: 9.4.6
+    valuesInline:
+      configs:
+        cm:
+          kustomize.buildOptions: "--enable-helm"
 
 resources:
   - ./namespace.yaml

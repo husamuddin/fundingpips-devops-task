@@ -12,8 +12,9 @@ dependency "eks" {
 
 
 inputs = {
-  name   = values.name
-  policy = values.policy
+  name     = values.name
+  policy   = try(values.policy, null)
+  policies = try(values.policies, {})
   oidc_providers = {
     eks = {
       provider_arn = dependency.eks.outputs.oidc_provider_arn

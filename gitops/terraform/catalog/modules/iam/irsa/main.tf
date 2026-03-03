@@ -4,6 +4,7 @@ resource "random_string" "random" {
 }
 
 resource "aws_iam_policy" "this" {
+  count  = var.policy != null ? 1 : 0
   name        = "external-secrets-isra-${random_string.random.result}"
   policy      = var.policy
 }
@@ -15,9 +16,10 @@ module "irsa" {
   name = var.name
   oidc_providers = var.oidc_providers
 
-  policies = {
-    external_secrets_policy = aws_iam_policy.this.arn
-  }
+  policies = merge(
+    var.policies,
+    var.policy != null ? { additional = aws_iam_policy.this[0].arn } : {}
+  )
 
   tags = var.tags
 }
