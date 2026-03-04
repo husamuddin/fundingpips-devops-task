@@ -114,14 +114,6 @@ These directories define deployment manifests and GitOps synchronization structu
 Based on a demo Infracost estimate:
 
 ```
- Name           Monthly Qty  Unit  Monthly Cost
-
- Project total                            $0.00
-
-──────────────────────────────────
-Project: .terragrunt-stack-main-eks
-Module path: .terragrunt-stack/main-eks
-
  Name                                               Monthly Qty  Unit                    Monthly Cost
 
  module.eks.aws_eks_cluster.this[0]
