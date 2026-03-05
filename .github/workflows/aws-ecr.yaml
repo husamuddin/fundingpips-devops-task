@@ -3,9 +3,10 @@ name: Release
 on:
   push:
     branches:
-      - main
+      - ecs
     paths:
       - api/**
+  workflow_dispatch: {}
 
 permissions:
   contents: read
