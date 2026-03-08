@@ -1,12 +1,18 @@
 locals {
   # Automatically load region-level variables
-  region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
+  region_vars = try(
+    read_terragrunt_config(find_in_parent_folders("region.hcl")),
+    { locals = { region = "eu-central-1" } }
+  )
 
   # Automatically load environment-level variables
-  environment_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  environment_vars = try(
+    read_terragrunt_config(find_in_parent_folders("env.hcl")),
+    { locals = {} }
+  )
 
-  aws_region         = local.region_vars.locals.region
-  backend_bucket     = "fundingpips-devops-task-terragrunt-state"
+  aws_region     = try(local.region_vars.locals.region, "eu-central-1")
+  backend_bucket = "fundingpips-devops-task-terragrunt-state"
 }
 
 # this is for enabling working with tflocal (localstack) for development
@@ -23,7 +29,6 @@ remote_state {
     key          = "${path_relative_to_include()}/terraform.tfstate"
     region       = "eu-central-1"
     encrypt      = true
-    use_lockfile = true
     dynamodb_table = "tfstate-lock"
   }
 }

@@ -31,9 +31,9 @@ unit "terraform-backend" {
   }
 }
 
-unit "container-registries" {
+unit "container-registry" {
   source = "${local.units_path}/ecr"
-  path = "container-registries"
+  path = "container-registry"
 
   values = {
     name = "api"
@@ -75,5 +75,33 @@ unit "main-vpc" {
     }
 
     tags        = try(local.env.tags, {})
+  }
+}
+
+unit "api-ecs" {
+  source = "${local.units_path}/ecs"
+  path   = "api-ecs"
+
+  values = {
+    name               = "api"
+    domain_name        = "ecs-task.fundingpips.xctl.fyi"
+    cloudflare_zone_id = "d4e68aa7a474446762b5879cddc5f3ba"
+    image_tag          = "f1aa443"
+    container_port     = 8000
+    region = local.env.region
+
+    secrets = [
+      {
+        name      = "SECRET_KEY_BASE"
+        valueFrom = "arn:aws:secretsmanager:eu-central-1:239861161554:secret:task/api-XIx9uV"
+      }
+    ]
+    environment = [
+      {
+        name  = "HTTP_PORT"
+        value = 8000
+      }
+    ]
+    tags               = try(local.env.tags, {})
   }
 }
