@@ -110,7 +110,7 @@ Apply:
 terragrunt run --all apply
 ```
 
-The stack definitions are in `terragrunt.stack.hcl` and include terraform state backend, ECR, GitHub OIDC, VPC, EKS, and IRSA units.
+The stack definitions are in `terragrunt.stack.hcl` and include terraform state backend, ECR, GitHub OIDC, VPC, EKS, and ECS units.
 
 ## CI/CD
 
