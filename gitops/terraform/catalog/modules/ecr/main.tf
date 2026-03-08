@@ -1,6 +1,6 @@
 locals {
-  region = var.region
-  name   = var.name
+  region     = var.region
+  name       = var.name
   account_id = data.aws_caller_identity.current.account_id
 }
 
@@ -32,7 +32,7 @@ module "ecr" {
     ]
   })
 
-  repository_force_delete = true
+  repository_force_delete         = true
   repository_image_tag_mutability = "IMMUTABLE_WITH_EXCLUSION"
   repository_image_tag_mutability_exclusion_filter = [
     {
@@ -42,4 +42,8 @@ module "ecr" {
   ]
 
   tags = var.tags
+}
+
+output "repository_url" {
+  value = module.ecr.repository_url
 }
