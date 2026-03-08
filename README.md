@@ -12,7 +12,7 @@ The app lives in `/api` directory and exposes:
 
 - [x] Containerized Rails API that builds and runs with Docker
 - [x] Infrastructure provisioned with Terraform/Terragrunt
-- [x] Automated CI/CD with GitHub Actions on `main` and `Argocd`
+- [x] Automated CI/CD with GitHub Actions on `main`.
 
 ## Repository Structure
 
