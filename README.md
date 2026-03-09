@@ -44,6 +44,54 @@ The app lives in `/api` directory and exposes:
 ├── mise.toml                                     # the virtual env manager
 ```
 
+## High Level Infrastructure Architecture for HA
+
+### CIDR / Subnet Layout Diagram
+```mermaid
+flowchart TB
+
+    VPC["VPC 10.0.0.0/16"]
+
+    subgraph Private_Subnets["Private Subnets"]
+        P1["10.0.0.0/20"]
+        P2["10.0.16.0/20"]
+        P3["10.0.32.0/20"]
+    end
+
+    subgraph Public_Subnets["Public Subnets"]
+        PUB1["10.0.48.0/20"]
+        PUB2["10.0.68.0/20"]
+        PUB3["10.0.80.0/20"]
+    end
+
+    VPC --> Private_Subnets
+    VPC --> Public_Subnets
+```
+
+### Network High level Architecture
+```mermaid
+flowchart TB
+
+    Internet((Internet))
+
+    IGW[Internet Gateway]
+
+    subgraph Public Subnets
+        ALB[Application Load Balancer]
+        NAT[NAT Gateway]
+    end
+
+    subgraph Private Subnets
+        ECS[ECS Services / Tasks]
+    end
+
+    Internet --> IGW
+    IGW --> ALB
+    ALB --> ECS
+    ECS --> NAT
+    NAT --> IGW
+```
+
 ## Prerequisites
 
 - Docker
