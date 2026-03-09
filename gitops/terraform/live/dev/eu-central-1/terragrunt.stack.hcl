@@ -66,13 +66,8 @@ unit "main-vpc" {
     single_nat_gateway   = true
     enable_dns_hostnames = true
 
-    public_subnet_tags = {
-      "kubernetes.io/role/elb" = 1
-    }
-
-    private_subnet_tags = {
-      "kubernetes.io/role/internal-elb" = 1
-    }
+    public_subnet_tags   = {}
+    private_subnet_tags  = {}
 
     tags        = try(local.env.tags, {})
   }
